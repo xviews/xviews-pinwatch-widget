@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xviews PinWatch Widget</title>
+<meta name="description" content="Das Thermal Grizzly WireView Pro II live auf dem Display der CORSAIR VANGUARD 96: Strom pro Pin, Leistung und Temperaturen. iCUE-5-Widget mit Live-Demo im Browser.">
+<meta property="og:title" content="Xviews PinWatch Widget">
+<meta property="og:description" content="Das Thermal Grizzly WireView Pro II live auf dem Display der CORSAIR VANGUARD 96: Strom pro Pin, Leistung und Temperaturen.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="icon-color.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+	--bg: #0d0b14; --bg2: #15121f; --card: #1a1726; --line: #2c2740;
+	--text: #f4f2fa; --muted: #a7a1bd; --accent: #ff7a1a; --accent2: #ffb36b; --ok: #22c55e;
+	--radius: 18px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+	margin: 0; background: var(--bg); color: var(--text);
+	font: 17px/1.6 Inter, "Segoe UI", system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+html[lang="de"] [lang="en"], html[lang="en"] [lang="de"] { display: none !important; }
+a { color: var(--accent2); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+/* Kopf */
+header.top { position: sticky; top: 0; z-index: 10; background: #0d0b14d9; backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; gap: 14px; height: 60px; }
+header.top img { width: 30px; height: 30px; }
+header.top .name { font-weight: 700; }
+header.top nav { margin-left: auto; display: flex; gap: 20px; align-items: center; }
+header.top nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+header.top nav a:hover { color: var(--text); }
+.lang { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.lang button { background: none; border: 0; color: var(--muted); font: 600 13px Inter, sans-serif; padding: 5px 11px; cursor: pointer; }
+.lang button.on { background: var(--accent); color: #1a0d00; }
+
+/* Hero */
+.hero { position: relative; overflow: hidden; padding: 72px 0 40px; }
+.hero::before { content: ""; position: absolute; inset: -200px -200px auto auto; width: 700px; height: 700px; background: radial-gradient(closest-side, #ff7a1a33, transparent); pointer-events: none; }
+.hero .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center; position: relative; }
+.kicker { color: var(--accent); font-weight: 700; letter-spacing: .02em; }
+.badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; margin-bottom: 18px; border-radius: 999px; border: 1px solid #ff7a1a80; background: #ff7a1a1f; color: var(--accent2); font-weight: 600; font-size: 15px; }
+.badge svg { width: 17px; height: 17px; flex: none; }
+h1 { font-size: clamp(38px, 5.4vw, 60px); line-height: 1.05; margin: 6px 0 18px; letter-spacing: -.02em; }
+.lead { font-size: 20px; color: #d8d3ea; margin: 0 0 28px; }
+.buttons { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 17px; }
+.btn.primary { background: var(--ok); color: #04210f; box-shadow: 0 8px 30px #22c55e40; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.ghost { border: 1px solid var(--line); color: var(--text); }
+.btn.ghost:hover { border-color: var(--accent); }
+.btn svg { width: 20px; height: 20px; }
+.small { font-size: 14px; color: var(--muted); margin-top: 14px; }
+.hero .shot { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 80px #000a; }
+.hero .shot img { display: block; width: 100%; }
+
+/* Abschnitte */
+section { padding: 64px 0; }
+section.alt { background: var(--bg2); border-block: 1px solid var(--line); }
+h2 { font-size: clamp(28px, 3.6vw, 38px); margin: 0 0 10px; letter-spacing: -.01em; }
+.sub { color: var(--muted); margin: 0 0 32px; max-width: 720px; }
+
+/* Demo */
+.demo { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: center; }
+.bezel { background: linear-gradient(#1b1b1f, #0e0e11); border-radius: 22px; padding: 18px; border: 1px solid #2a2a30; box-shadow: 0 30px 80px #000c, inset 0 1px 0 #ffffff14; }
+.screen { position: relative; width: 100%; aspect-ratio: 248 / 170; border-radius: 6px; overflow: hidden; background: #0b0d10; }
+.screen iframe { position: absolute; left: 0; top: 0; width: 248px; height: 170px; border: 0; transform-origin: 0 0; }
+.controls h3 { margin: 0 0 10px; font-size: 18px; }
+.seg { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.seg button, .dial button { background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font: 600 15px Inter, sans-serif; cursor: pointer; }
+.seg button.on { border-color: var(--accent); background: #ff7a1a22; color: var(--accent2); }
+.dial { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.dial button:hover, .seg button:hover { border-color: var(--accent); }
+.hint { font-size: 14px; color: var(--muted); }
+
+/* Funktionen */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+.card .no { color: var(--accent); font-weight: 800; font-size: 14px; }
+.card h3 { margin: 4px 0 6px; font-size: 19px; }
+.card p { margin: 0; color: var(--muted); font-size: 15.5px; }
+.wide { margin-top: 28px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+.wide img { display: block; width: 100%; }
+ul.checks { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; }
+ul.checks li { padding-left: 30px; position: relative; color: #d8d3ea; }
+ul.checks li::before { content: ""; position: absolute; left: 0; top: 6px; width: 18px; height: 18px; border-radius: 50%; background: var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2304210f' stroke-width='4'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/12px no-repeat; }
+
+/* Ablauf */
+.flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 12px; align-items: center; }
+.flow .node { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; }
+.flow .node b { display: block; }
+.flow .node span { font-size: 14px; color: var(--muted); }
+.flow .arrow { color: var(--accent); font-size: 22px; }
+.steps { counter-reset: s; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 32px; }
+.steps .card { position: relative; padding-left: 70px; }
+.steps .card::before { counter-increment: s; content: counter(s); position: absolute; left: 22px; top: 20px; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #1a0d00; font-weight: 800; display: grid; place-items: center; }
+code { background: #ffffff12; padding: 1px 6px; border-radius: 6px; font-size: .92em; }
+.note { margin-top: 24px; padding: 16px 20px; border-left: 4px solid var(--accent); background: #ff7a1a12; border-radius: 0 12px 12px 0; color: #e7e2f5; font-size: 15.5px; }
+
+/* Fuß */
+footer { padding: 40px 0 60px; color: var(--muted); font-size: 14.5px; border-top: 1px solid var(--line); }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px 40px; flex-wrap: wrap; }
+footer .brand { display: flex; align-items: center; gap: 16px; max-width: 640px; }
+footer .brand img { width: 56px; height: auto; flex: none; }
+footer .brand b { display: block; color: var(--text); font-size: 15.5px; margin-bottom: 2px; }
+footer .brand p { margin: 0; line-height: 1.5; }
+footer .brand > div { min-width: 0; }
+footer .links { display: flex; gap: 22px; flex-wrap: wrap; }
+footer .links a { color: var(--muted); text-decoration: none; font-weight: 600; }
+footer .links a:hover { color: var(--accent); }
+
+@media (max-width: 900px) {
+	.hero .wrap, .demo { grid-template-columns: 1fr; }
+	.grid { grid-template-columns: 1fr 1fr; }
+	.flow { grid-template-columns: 1fr; }
+	.flow .arrow { transform: rotate(90deg); text-align: center; }
+	header.top nav a.hide-sm { display: none; }
+}
+@media (max-width: 620px) {
+	body { font-size: 16px; }
+	.wrap { padding: 0 16px; }
+	.grid, .steps, ul.checks { grid-template-columns: 1fr; }
+	.hero { padding-top: 40px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+	<div class="wrap">
+		<img src="icon-color.svg" alt="">
+		<span class="name">PinWatch</span>
+		<nav>
+			<a href="#demo" class="hide-sm"><span lang="de">Live-Demo</span><span lang="en">Live demo</span></a>
+			<a href="#funktionen" class="hide-sm"><span lang="de">Funktionen</span><span lang="en">Features</span></a>
+			<a href="#installation" class="hide-sm">Installation</a>
+			<a href="https://github.com/xviews/xviews-pinwatch-widget">GitHub</a>
+			<div class="lang"><button data-lang="de">DE</button><button data-lang="en">EN</button></div>
+		</nav>
+	</div>
+</header>
+
+<div class="hero">
+	<div class="wrap">
+		<div>
+			<div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 11v6M12 7.5v.01"/></svg><span lang="de">Inoffizielles Community-Projekt</span><span lang="en">Unofficial community project</span></div>
+			<div class="kicker">Xviews</div>
+			<h1>PinWatch Widget</h1>
+			<p class="lead">
+				<span lang="de">Das <b>Thermal Grizzly WireView Pro II</b> live auf dem Display der <b>CORSAIR VANGUARD 96</b>.</span>
+				<span lang="en">The <b>Thermal Grizzly WireView Pro II</b>, live on the display of the <b>CORSAIR VANGUARD 96</b>.</span>
+			</p>
+			<div class="buttons">
+				<a class="btn primary" href="https://github.com/xviews/xviews-pinwatch-widget/releases/latest">
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+					<span lang="de">Download</span><span lang="en">Download</span> <span id="ver"></span>
+				</a>
+				<a class="btn ghost" href="#demo"><span lang="de">Live-Demo ausprobieren</span><span lang="en">Try the live demo</span></a>
+			</div>
+			<p class="small">
+				<span lang="de">Kostenlos · Windows 10/11 · iCUE 5 ab 5.47 · Inoffiziell, keine Verbindung zu Thermal Grizzly oder CORSAIR</span>
+				<span lang="en">Free · Windows 10/11 · iCUE 5 from 5.47 · Unofficial, not affiliated with Thermal Grizzly or CORSAIR</span>
+			</p>
+		</div>
+		<div class="shot">
+			<img lang="de" src="img/photo-de.jpg" alt="PinWatch auf der VANGUARD 96: links im Leerlauf, rechts unter Last">
+			<img lang="en" src="img/photo-en.jpg" alt="PinWatch on the VANGUARD 96: idle on the left, under load on the right">
+		</div>
+	</div>
+</div>
+
+<section id="demo" class="alt">
+	<div class="wrap">
+		<h2><span lang="de">Live-Demo</span><span lang="en">Live demo</span></h2>
+		<p class="sub">
+			<span lang="de">Das ist das echte Widget, nur mit simulierten Messwerten statt eines echten WireView. Ein Klick aufs Display wirkt wie ein Druck aufs Drehrad.</span>
+			<span lang="en">This is the real widget, just with simulated readings instead of a WireView. Clicking the display works like pressing the dial.</span>
+		</p>
+		<div class="demo">
+			<div class="bezel"><div class="screen" id="screen"><iframe id="widget" title="PinWatch Demo" src="demo/widget.html"></iframe></div></div>
+			<div class="controls">
+				<h3><span lang="de">Last am Stecker</span><span lang="en">Connector load</span></h3>
+				<div class="seg" id="scenarios">
+					<button data-s="idle"><span lang="de">Leerlauf</span><span lang="en">Idle</span></button>
+					<button data-s="load" class="on"><span lang="de">Spiel</span><span lang="en">Gaming</span></button>
+					<button data-s="imbalance"><span lang="de">Ungleichheit</span><span lang="en">Imbalance</span></button>
+				</div>
+				<h3><span lang="de">Drehrad</span><span lang="en">Dial</span></h3>
+				<div class="dial">
+					<button data-d="press"><span lang="de">Drücken: nächste Seite</span><span lang="en">Press: next page</span></button>
+					<button data-d="long-press"><span lang="de">Halten: Spitzenwerte zurücksetzen</span><span lang="en">Hold: reset peaks</span></button>
+				</div>
+				<p class="hint">
+					<span lang="de">Bei „Ungleichheit“ trägt Pin 5 viel mehr als Pin 4. Nach zwei Sekunden erscheint die Warnung, ein Druck bestätigt sie. Auf dem Gerät drehst du am Rad, um zwischen den Widgets zu wechseln.</span>
+					<span lang="en">With “Imbalance”, pin 5 carries much more than pin 4. After two seconds the warning appears, a press confirms it. On the device you turn the dial to switch between widgets.</span>
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="funktionen">
+	<div class="wrap">
+		<h2><span lang="de">Sieben Seiten auf einen Blick</span><span lang="en">Seven pages at a glance</span></h2>
+		<p class="sub">
+			<span lang="de">Welche Seiten das Widget zeigt, stellst du in iCUE ein. Du kannst es auch mehrfach hinzufügen und dann durch Drehen am Rad zwischen ihnen wechseln.</span>
+			<span lang="en">You choose in iCUE which pages the widget shows. You can also add it several times and switch by turning the dial.</span>
+		</p>
+		<div class="grid">
+			<div class="card"><div class="no">1</div><h3><span lang="de">Übersicht</span><span lang="en">Overview</span></h3><p><span lang="de">Gesamtleistung, Auslastung des Netzteil-Limits, drei frei wählbare Werte und der Strom jedes Pins.</span><span lang="en">Total power, PSU limit usage, three values of your choice and the current of each pin.</span></p></div>
+			<div class="card"><div class="no">2</div><h3>Pins</h3><p><span lang="de">Spannung, Abweichung vom Durchschnitt, Strom und Leistung aller sechs Pins.</span><span lang="en">Voltage, deviation from the average, current and power of all six pins.</span></p></div>
+			<div class="card"><div class="no">3</div><h3><span lang="de">Verlauf</span><span lang="en">History</span></h3><p><span lang="de">Leistungskurve über 1, 5, 10 oder 30 Minuten mit Maximum und Durchschnitt.</span><span lang="en">Power curve of the last 1, 5, 10 or 30 minutes with maximum and average.</span></p></div>
+			<div class="card"><div class="no">4</div><h3>Details</h3><p><span lang="de">Temperaturen, Gesamtstrom, Lüfter und Spitzenwerte.</span><span lang="en">Temperatures, total current, fan and peak values.</span></p></div>
+			<div class="card"><div class="no">5</div><h3><span lang="de">Gerät</span><span lang="en">Device</span></h3><p><span lang="de">Fehlerspeicher, Grenzwerte und Lüfterkurve des WireView.</span><span lang="en">Fault log, limits and fan curve of the WireView.</span></p></div>
+			<div class="card"><div class="no">6</div><h3>GPU</h3><p><span lang="de">NVIDIA-Karte: Auslastung, Temperatur, Takt, VRAM und Leistung laut Treiber im Vergleich zum Stecker.</span><span lang="en">NVIDIA card: load, temperature, clock, VRAM and driver power compared to the connector.</span></p></div>
+			<div class="card"><div class="no">7</div><h3><span lang="de">Stecker</span><span lang="en">Connector</span></h3><p><span lang="de">Zustand des Steckers über Wochen: jeder Pin im Vergleich zu einem Referenztag, damit schleichende Probleme auffallen.</span><span lang="en">Connector health over weeks: each pin compared to a reference day, so creeping problems stand out.</span></p></div>
+			<div class="card"><div class="no">!</div><h3><span lang="de">Warnungen</span><span lang="en">Warnings</span></h3><p><span lang="de">Popup bei Fehlern des WireView, bei Ungleichheit, Spannungsabfall oder einem auffälligen Pin. Optional auch als Windows-Benachrichtigung.</span><span lang="en">Popup for WireView faults, imbalance, voltage drop or an unusual pin. Optionally as a Windows notification too.</span></p></div>
+			<div class="card"><div class="no">✓</div><h3><span lang="de">Stecker-Bericht</span><span lang="en">Connector report</span></h3><p><span lang="de">Ausführlicher Bericht mit Diagrammen im Browser, per Rechtsklick auf das Symbol der Bridge.</span><span lang="en">Detailed report with charts in the browser, via right-click on the bridge icon.</span></p></div>
+		</div>
+		<div class="wide">
+			<img lang="de" src="img/gallery-de.png" alt="Alle sieben Seiten und ein Warn-Popup">
+			<img lang="en" src="img/gallery-en.png" alt="All seven pages and a warning popup">
+		</div>
+		<ul class="checks">
+			<li><span lang="de">Ampelfarben Grün, Orange und Rot, alle Farben einstellbar</span><span lang="en">Traffic-light colors green, orange, red, all colors adjustable</span></li>
+			<li><span lang="de">Nutzt die Grenzwerte aus dem WireView oder eigene</span><span lang="en">Uses the limits stored in the WireView or your own</span></li>
+			<li><span lang="de">Deutsch und Englisch, folgt der Sprache von iCUE</span><span lang="en">German and English, follows the iCUE language</span></li>
+			<li><span lang="de">Liest das WireView nur aus und ändert nichts am Gerät</span><span lang="en">Only reads the WireView, never changes the device</span></li>
+			<li><span lang="de">Ohne Thermal-Grizzly-App und ohne HWiNFO</span><span lang="en">No Thermal Grizzly app and no HWiNFO needed</span></li>
+			<li><span lang="de">Daten bleiben auf deinem PC (nur localhost)</span><span lang="en">Data stays on your PC (localhost only)</span></li>
+		</ul>
+	</div>
+</section>
+
+<section id="installation" class="alt">
+	<div class="wrap">
+		<h2><span lang="de">So funktioniert's</span><span lang="en">How it works</span></h2>
+		<p class="sub">
+			<span lang="de">iCUE-Widgets dürfen keine USB-Geräte ansprechen. Deshalb liest die kleine PinWatch Bridge das WireView aus und gibt die Werte nur auf deinem eigenen PC weiter.</span>
+			<span lang="en">iCUE widgets cannot talk to USB devices. So the small PinWatch Bridge reads the WireView and passes the values on, only on your own PC.</span>
+		</p>
+		<div class="flow">
+			<div class="node"><b>WireView Pro II</b><span lang="de">am Stecker der Grafikkarte</span><span lang="en">on the GPU connector</span></div>
+			<div class="arrow">→</div>
+			<div class="node"><b>USB</b><span lang="de">Kabel zum PC</span><span lang="en">cable to the PC</span></div>
+			<div class="arrow">→</div>
+			<div class="node"><b>PinWatch Bridge</b><span lang="de">Symbol im Infobereich</span><span lang="en">tray icon</span></div>
+			<div class="arrow">→</div>
+			<div class="node"><b>iCUE-Widget</b><span lang="de">Display der VANGUARD 96</span><span lang="en">VANGUARD 96 display</span></div>
+		</div>
+
+		<div class="steps">
+			<div class="card"><h3><span lang="de">ZIP-Datei herunterladen und entpacken</span><span lang="en">Download and extract the ZIP</span></h3><p><span lang="de">Die neueste Version findest du unter <a href="https://github.com/xviews/xviews-pinwatch-widget/releases/latest">Releases</a>. Vorher die WireView-App von Thermal Grizzly schließen.</span><span lang="en">The latest version under <a href="https://github.com/xviews/xviews-pinwatch-widget/releases/latest">Releases</a>. Close the Thermal Grizzly WireView app first.</span></p></div>
+			<div class="card"><h3><span lang="de"><code>Install.cmd</code> starten</span><span lang="en">Run <code>Install.cmd</code></span></h3><p><span lang="de">Installiert die Bridge, trägt sie in den Autostart ein und startet sie.</span><span lang="en">Installs the bridge, adds it to autostart and starts it.</span></p></div>
+			<div class="card"><h3><span lang="de">Widget in iCUE importieren</span><span lang="en">Import the widget into iCUE</span></h3><p><span lang="de">Der Installer bietet das am Ende an. Zugriff auf <code>localhost:8787</code> erlauben und das Widget zum Bildschirm hinzufügen.</span><span lang="en">The installer offers this at the end. Allow access to <code>localhost:8787</code> and add the widget to the screen.</span></p></div>
+			<div class="card"><h3><span lang="de">Drehrad einstellen</span><span lang="en">Set up the dial</span></h3><p><span lang="de">In iCUE unter Rotary Dial „Bildschirm-Widget“ wählen. Mit <code>Fn</code> + <code>F12</code> wechselt das Rad zwischen Lautstärke und Widget.</span><span lang="en">In iCUE under Rotary Dial choose “Screen widget”. <code>Fn</code> + <code>F12</code> switches the dial between volume and widget.</span></p></div>
+		</div>
+
+		<div class="note">
+			<span lang="de"><b>Du brauchst:</b> Windows 10/11 (64 Bit), iCUE 5 ab 5.47, CORSAIR VANGUARD 96 oder VANGUARD PRO 96 (kabelgebunden), Thermal Grizzly WireView Pro II mit USB-Kabel zum PC und die .NET 10 Desktop Runtime (der Installer prüft das). Alle Details stehen in der <a href="https://github.com/xviews/xviews-pinwatch-widget#readme">Anleitung auf GitHub</a>.</span>
+			<span lang="en"><b>You need:</b> Windows 10/11 (64-bit), iCUE 5 from 5.47, CORSAIR VANGUARD 96 or VANGUARD PRO 96 (wired), Thermal Grizzly WireView Pro II with a USB cable to the PC and the .NET 10 Desktop Runtime (the installer checks this). All details are in the <a href="https://github.com/xviews/xviews-pinwatch-widget/blob/main/README.en.md">guide on GitHub</a>.</span>
+		</div>
+	</div>
+</section>
+
+<footer>
+	<div class="wrap">
+		<div class="brand">
+			<img src="https://raw.githubusercontent.com/xviews/xviews/main/bilder/xviews.png" alt="Xviews">
+			<div>
+				<b>© 2026 Xviews · <span lang="de">MIT-Lizenz</span><span lang="en">MIT license</span></b>
+				<p lang="de">Inoffizielles Projekt. Thermal Grizzly, WireView, CORSAIR, iCUE und VANGUARD sind Marken ihrer jeweiligen Inhaber. Nutzung auf eigene Gefahr.</p>
+				<p lang="en">Unofficial project. Thermal Grizzly, WireView, CORSAIR, iCUE and VANGUARD are trademarks of their respective owners. Use at your own risk.</p>
+			</div>
+		</div>
+		<div class="links">
+			<a href="https://github.com/xviews/xviews-pinwatch-widget">GitHub</a>
+			<a href="https://github.com/xviews/xviews-pinwatch-widget/issues/new/choose"><span lang="de">Fehler melden</span><span lang="en">Report a bug</span></a>
+			<a href="https://github.com/xviews"><span lang="de">Weitere Xviews-Tools</span><span lang="en">More Xviews tools</span></a>
+		</div>
+	</div>
+</footer>
+
+<script>
+// Sprache: ?lang=en, sonst Browsersprache; Wahl wird gemerkt
+const LANGS = ["de", "en"];
+function pick() {
+	const q = new URLSearchParams(location.search).get("lang");
+	if (LANGS.includes(q)) return q;
+	try { const s = localStorage.getItem("pinwatch-site-lang"); if (LANGS.includes(s)) return s; } catch (e) { }
+	return (navigator.language || "").toLowerCase().startsWith("de") ? "de" : "en";
+}
+const frame = document.getElementById("widget");
+function setLang(l, user) {
+	document.documentElement.lang = l;
+	document.querySelectorAll(".lang button").forEach((b) => b.classList.toggle("on", b.dataset.lang === l));
+	document.title = "Xviews PinWatch Widget";
+	if (user) { try { localStorage.setItem("pinwatch-site-lang", l); } catch (e) { } }
+	const src = "demo/widget.html?lang=" + l;
+	if (!frame.src.endsWith(src)) frame.src = src;
+}
+document.querySelectorAll(".lang button").forEach((b) => b.addEventListener("click", () => setLang(b.dataset.lang, true)));
+setLang(pick());
+
+// Widget auf die Displaygröße skalieren (Widget-Fläche der VANGUARD 96: 248 × 170)
+const screen = document.getElementById("screen");
+new ResizeObserver(() => { frame.style.transform = "scale(" + screen.clientWidth / 248 + ")"; }).observe(screen);
+
+// Szenario beim Neuladen des Widgets (Sprachwechsel) beibehalten
+let scenario = "load";
+frame.addEventListener("load", () => frame.contentWindow.postMessage({ scenario }, "*"));
+document.querySelectorAll("#scenarios button").forEach((b) => b.addEventListener("click", () => {
+	scenario = b.dataset.s;
+	document.querySelectorAll("#scenarios button").forEach((x) => x.classList.toggle("on", x === b));
+	frame.contentWindow.postMessage({ scenario }, "*");
+}));
+document.querySelectorAll(".dial button").forEach((b) => b.addEventListener("click", () => frame.contentWindow.postMessage({ dial: b.dataset.d }, "*")));
+
+// Aktuelle Version auf dem Download-Knopf
+fetch("https://api.github.com/repos/xviews/xviews-pinwatch-widget/releases/latest")
+	.then((r) => (r.ok ? r.json() : null))
+	.then((j) => { if (j && j.tag_name) document.getElementById("ver").textContent = j.tag_name; })
+	.catch(() => { });
+</script>
+</body>
+</html>

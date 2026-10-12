@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" />
+		<script src="mock.js"></script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>tr('PinWatch')</title>
+		<link rel="icon" type="image/svg+xml" href="resources/icon.svg" />
+
+		<meta name="x-icue-property" content="cyclePageSec" data-label="tr('Auto Page Change (s)')" data-type="tab-buttons" data-values="[{'key':'0','value':tr('Off')},{'key':'10','value':'10'},{'key':'20','value':'20'},{'key':'30','value':'30'},{'key':'60','value':'60'}]" data-default="'0'" />
+		<meta name="x-icue-property" content="overviewStat1" data-label="tr('Overview Field 1')" data-type="combobox" data-values="[{'key':'volt','value':tr('Voltage')},{'key':'wvTemp','value':tr('WireView Temperature (highest)')},{'key':'wvTempIn','value':tr('WireView Temperature In')},{'key':'wvTempOut','value':tr('WireView Temperature Out')},{'key':'wvTempExt1','value':tr('Ext. Sensor 1')},{'key':'wvTempExt2','value':tr('Ext. Sensor 2')},{'key':'wvFan','value':tr('WireView Fan')},{'key':'totalA','value':tr('Total Current')},{'key':'gpuTemp','value':tr('GPU Temperature')},{'key':'gpuLoad','value':tr('GPU Load')},{'key':'gpuPower','value':tr('GPU Power')},{'key':'gpuClock','value':tr('GPU Clock')},{'key':'slotW','value':tr('Difference (Slot)')}]" data-default="'gpuTemp'" />
+		<meta name="x-icue-property" content="overviewStat2" data-label="tr('Overview Field 2')" data-type="combobox" data-values="[{'key':'volt','value':tr('Voltage')},{'key':'wvTemp','value':tr('WireView Temperature (highest)')},{'key':'wvTempIn','value':tr('WireView Temperature In')},{'key':'wvTempOut','value':tr('WireView Temperature Out')},{'key':'wvTempExt1','value':tr('Ext. Sensor 1')},{'key':'wvTempExt2','value':tr('Ext. Sensor 2')},{'key':'wvFan','value':tr('WireView Fan')},{'key':'totalA','value':tr('Total Current')},{'key':'gpuTemp','value':tr('GPU Temperature')},{'key':'gpuLoad','value':tr('GPU Load')},{'key':'gpuPower','value':tr('GPU Power')},{'key':'gpuClock','value':tr('GPU Clock')},{'key':'slotW','value':tr('Difference (Slot)')}]" data-default="'wvTemp'" />
+		<meta name="x-icue-property" content="overviewStat3" data-label="tr('Overview Field 3')" data-type="combobox" data-values="[{'key':'volt','value':tr('Voltage')},{'key':'wvTemp','value':tr('WireView Temperature (highest)')},{'key':'wvTempIn','value':tr('WireView Temperature In')},{'key':'wvTempOut','value':tr('WireView Temperature Out')},{'key':'wvTempExt1','value':tr('Ext. Sensor 1')},{'key':'wvTempExt2','value':tr('Ext. Sensor 2')},{'key':'wvFan','value':tr('WireView Fan')},{'key':'totalA','value':tr('Total Current')},{'key':'gpuTemp','value':tr('GPU Temperature')},{'key':'gpuLoad','value':tr('GPU Load')},{'key':'gpuPower','value':tr('GPU Power')},{'key':'gpuClock','value':tr('GPU Clock')},{'key':'slotW','value':tr('Difference (Slot)')}]" data-default="'wvFan'" />
+		<meta name="x-icue-property" content="historyMinutes" data-label="tr('History (min)')" data-type="tab-buttons" data-values="[{'key':'1','value':'1'},{'key':'5','value':'5'},{'key':'10','value':'10'},{'key':'30','value':'30'}]" data-default="'5'" />
+
+		<meta name="x-icue-property" content="showPage1" data-label="tr('Overview')" data-type="switch" data-default="true" />
+		<meta name="x-icue-property" content="showPage2" data-label="tr('Pins')" data-type="switch" data-default="false" />
+		<meta name="x-icue-property" content="showPage3" data-label="tr('History')" data-type="switch" data-default="false" />
+		<meta name="x-icue-property" content="showPage4" data-label="tr('Details')" data-type="switch" data-default="false" />
+		<meta name="x-icue-property" content="showPage5" data-label="tr('Device')" data-type="switch" data-default="false" />
+		<meta name="x-icue-property" content="showPage6" data-label="tr('GPU')" data-type="switch" data-default="false" />
+		<meta name="x-icue-property" content="showPage7" data-label="tr('Connector')" data-type="switch" data-default="false" />
+
+		<meta name="x-icue-property" content="useDeviceLimits" data-label="tr('Use WireView Limits')" data-type="switch" data-default="true" />
+		<meta name="x-icue-property" content="voltDropMv" data-label="tr('Voltage Drop (mV)')" data-type="tab-buttons" data-values="[{'key':'50','value':'50'},{'key':'80','value':'80'},{'key':'100','value':'100'},{'key':'150','value':'150'},{'key':'200','value':'200'}]" data-default="'80'" />
+		<meta name="x-icue-property" content="warnFromPct" data-label="tr('Warning From (%)')" data-type="tab-buttons" data-values="[{'key':'70','value':'70'},{'key':'75','value':'75'},{'key':'80','value':'80'},{'key':'85','value':'85'},{'key':'90','value':'90'}]" data-default="'85'" />
+		<meta name="x-icue-property" content="imbalancePopup" data-label="tr('Warning Popups')" data-type="switch" data-default="true" />
+
+		<meta name="x-icue-property" content="ownPinLimit" data-label="tr('Pin Current (A)')" data-type="tab-buttons" data-values="[{'key':'8.5','value':'8.5'},{'key':'9','value':'9'},{'key':'9.5','value':'9.5'},{'key':'10','value':'10'},{'key':'10.5','value':'10.5'}]" data-default="'10.5'" />
+		<meta name="x-icue-property" content="ownTempLimit" data-label="tr('Temperature (°C)')" data-type="tab-buttons" data-values="[{'key':'70','value':'70'},{'key':'75','value':'75'},{'key':'80','value':'80'},{'key':'85','value':'85'},{'key':'90','value':'90'}]" data-default="'80'" />
+		<meta name="x-icue-property" content="ownImbalanceLimit" data-label="tr('Imbalance (%)')" data-type="tab-buttons" data-values="[{'key':'20','value':'20'},{'key':'25','value':'25'},{'key':'30','value':'30'},{'key':'35','value':'35'},{'key':'40','value':'40'}]" data-default="'40'" />
+
+		<meta name="x-icue-property" content="showPinValues" data-label="tr('Show Pin Currents')" data-type="switch" data-default="true" />
+		<meta name="x-icue-property" content="okColor" data-label="tr('OK Color (Bars)')" data-type="color" data-default="'#22C55E'" />
+		<meta name="x-icue-property" content="warnColor" data-label="tr('Warning Color')" data-type="color" data-default="'#FF6A00'" />
+		<meta name="x-icue-property" content="critColor" data-label="tr('Critical Color')" data-type="color" data-default="'#FF2020'" />
+		<meta name="x-icue-property" content="accentColor" data-label="tr('Power Color')" data-type="color" data-default="'#FF7A1A'" />
+		<meta name="x-icue-property" content="textColor" data-label="tr('Text Color')" data-type="color" data-default="'#FFFFFF'" />
+		<meta name="x-icue-property" content="labelColor" data-label="tr('Label Color')" data-type="color" data-default="'#B1B2B3'" />
+		<meta name="x-icue-property" content="chartColor" data-label="tr('Chart Color')" data-type="color" data-default="'#FF7A1A'" />
+		<meta name="x-icue-property" content="trackColor" data-label="tr('Bar Background')" data-type="color" data-default="'#232527'" />
+		<meta name="x-icue-property" content="backgroundColor" data-label="tr('Background Color')" data-type="color" data-default="'#0B0D10'" />
+
+		<script type="application/json" id="x-icue-groups">
+		[
+			{
+				"title": "tr('View')",
+				"properties": ["showPage1", "showPage2", "showPage3", "showPage4", "showPage5", "showPage6", "showPage7", "cyclePageSec", "overviewStat1", "overviewStat2", "overviewStat3", "historyMinutes"],
+				"info": "tr('Press the dial for the next page, hold it to reset peak values. The first page switched on is the start page. Full connector report: right-click the bridge icon, Open connector report')"
+			},
+			{
+				"title": "tr('Limits')",
+				"properties": ["useDeviceLimits", "voltDropMv", "warnFromPct", "imbalancePopup"],
+				"info": "tr('Use WireView Limits on: pin current, temperature and imbalance limits come from the WireView. Voltage drop: how far a pin may fall below the average. Orange from Warning from, red from the limit')"
+			},
+			{
+				"title": "tr('Own Limits')",
+				"properties": ["ownPinLimit", "ownTempLimit", "ownImbalanceLimit"],
+				"info": "tr('Only used when Use WireView Limits is off. Imbalance: how far the strongest pin may be above the average')"
+			},
+			{
+				"title": "tr('Appearance')",
+				"properties": ["showPinValues", "okColor", "warnColor", "critColor", "accentColor", "chartColor", "textColor", "labelColor", "trackColor", "backgroundColor"],
+				"info": "tr('Unofficial, not affiliated with Thermal Grizzly or CORSAIR. Trademarks belong to their owners')"
+			}
+		]
+		</script>
+
+		<style>
+		@font-face {
+			font-family: OpenSansRegular;
+			src: url("qrc:/fonts/OpenSans-Regular.ttf");
+			font-weight: 400;
+		}
+		@font-face {
+			font-family: OpenSansSemiBold;
+			src: url("qrc:/fonts/OpenSans-SemiBold.ttf");
+			font-weight: 600;
+		}
+		:root {
+			--accent: #ff7a1a;
+			--text: #ffffff;
+			--bg: #0b0d10;
+			--ok: #22c55e;
+			--warn: #ff6a00;
+			--crit: #ff2020;
+			--muted: #b1b2b3;
+			--track: #232527;
+			--chart: #ff7a1a;
+		}
+		* { box-sizing: border-box; }
+		html, body {
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
+			background: var(--bg);
+			color: var(--text);
+			font-family: OpenSansRegular, "Segoe UI", sans-serif;
+			font-variant-numeric: tabular-nums;
+		}
+		body.loading .page, body.loading .message { visibility: hidden; }
+		.b { font-family: OpenSansSemiBold, "Segoe UI", sans-serif; font-weight: 600; }
+		.muted { color: var(--muted); }
+		.warn { color: var(--warn); }
+		.crit { color: var(--crit); }
+
+		#root {
+			/* Eigene Ebene: Chromium glättet Schrift dann in Graustufen statt mit ClearType (keine Farbsäume auf dem Display) */
+			will-change: transform;
+			position: absolute;
+			inset: 0;
+			display: flex;
+			flex-direction: column;
+			padding: 5vmin 6vmin 4vmin;
+			border: 0.8vmin solid transparent;
+			transition: border-color 0.3s;
+		}
+		body.state-alert #root { border-color: var(--crit); }
+
+		/* Kopfzeile: Seitenpunkte links, Fehlertext, Status-Punkt rechts */
+		.head {
+			position: absolute;
+			top: 2.6vmin;
+			left: 5vmin;
+			right: 4vmin;
+			display: flex;
+			align-items: center;
+			gap: 2vmin;
+			font-size: 6.5vmin;
+			z-index: 2;
+		}
+		.pager { display: flex; gap: 1.4vmin; flex: none; }
+		.pager span { width: 2.2vmin; height: 2.2vmin; border-radius: 50%; background: var(--track); }
+		.pager span.on { background: var(--muted); }
+		#headLabel { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--crit); }
+		/* Statusampel: nur sichtbar, wenn etwas nicht stimmt (orange = Warnung, rot blinkend = kritisch) */
+		.dot {
+			visibility: hidden;
+			width: 3.4vmin;
+			height: 3.4vmin;
+			border-radius: 50%;
+			background: var(--ok);
+			box-shadow: 0 0 2vmin var(--ok);
+			flex: none;
+			margin-left: auto;
+		}
+		body.state-warn .dot, body.state-alert .dot { visibility: visible; }
+		body.state-warn .dot { background: var(--warn); box-shadow: 0 0 2vmin var(--warn); }
+		body.state-alert .dot { background: var(--crit); box-shadow: 0 0 2vmin var(--crit); animation: blink 0.8s infinite; }
+		@keyframes blink { 50% { opacity: 0.25; } }
+
+		.page { display: none; flex: 1; min-height: 0; flex-direction: column; gap: 3vmin; }
+		.page.active { display: flex; }
+		body.offline .page { display: none; }
+
+		/* ---------- Seite 1: Übersicht */
+		.power {
+			display: flex;
+			align-items: baseline;
+			justify-content: center;
+			gap: 2vmin;
+			line-height: 1;
+			min-width: 0;
+			overflow: hidden;
+		}
+		.power .num { font-size: 26vmin; color: var(--accent); }
+		.power .unit { font-size: 10vmin; color: var(--muted); }
+		.cap { height: 1.6vmin; border-radius: 1vmin; background: var(--track); overflow: hidden; flex: none; }
+		.cap .fill { height: 100%; width: 0%; background: var(--ok); transition: width 0.4s ease-out, background-color 0.3s; }
+		.cap.warn .fill { background: var(--warn); }
+		.cap.crit .fill { background: var(--crit); }
+		.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2vmin; text-align: center; }
+		.stat { white-space: nowrap; overflow: hidden; min-width: 0; }
+		.stat .v { font-size: var(--stat-size, 12vmin); line-height: 1.1; }
+		.stat .u { font-size: calc(var(--stat-size, 12vmin) * 0.62); color: var(--muted); margin-left: 0.6vmin; }
+		.stat .lbl { font-family: OpenSansSemiBold, "Segoe UI", sans-serif; font-weight: 600; font-size: calc(var(--stat-size, 12vmin) * 0.52); color: var(--muted); margin-right: 0.8vmin; vertical-align: 0.25em; }
+		.stat .ico { width: calc(var(--stat-size, 12vmin) * 0.8); height: calc(var(--stat-size, 12vmin) * 0.8); margin-right: 1vmin; color: var(--muted); vertical-align: -0.08em; }
+		.stat:not(.fan) .ico { display: none; }
+		.stat.spin .ico { animation: spin 1.2s linear infinite; }
+		@keyframes spin { to { transform: rotate(360deg); } }
+		.stat.warn .v { color: var(--warn); }
+		.stat.crit .v { color: var(--crit); }
+		.pins { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 2vmin; }
+		.pin { display: flex; flex-direction: column; align-items: center; gap: 1vmin; min-height: 0; min-width: 0; }
+		.pin .amp {
+			width: 100%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-align: center;
+			font-size: var(--amp-size, 9vmin);
+			line-height: 1.15;
+		}
+		body.no-pin-values .pin .amp,
+		body.amps-too-small .pin .amp { visibility: hidden; }
+		.pin .track { position: relative; flex: 1; width: 100%; border-radius: 1.4vmin; background: var(--track); overflow: hidden; }
+		.pin .fill {
+			position: absolute;
+			left: 0; right: 0; bottom: 0;
+			height: 0%;
+			border-radius: 1.4vmin;
+			background: var(--ok);
+			transition: height 0.4s ease-out, background-color 0.3s;
+		}
+		.pin.warn .fill { background: var(--warn); }
+		.pin.crit .fill { background: var(--crit); }
+
+		/* ---------- Seite 2: Pins im Detail */
+		.ptable { flex: 1; display: grid; grid-template-columns: 0.6fr 1.5fr 1.2fr 1.2fr 1fr; align-content: space-evenly; row-gap: 0.5vmin; font-size: 8vmin; line-height: 1.15; }
+		.ptable > div { text-align: right; white-space: nowrap; }
+		.ptable > .h { font-size: 6.5vmin; color: var(--muted); }
+		.ptable > .idx { text-align: left; color: var(--muted); }
+
+		/* ---------- Seite 3: Verlauf */
+		.hist-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 6.5vmin; white-space: nowrap; margin-top: 3vmin; }
+		.hist-head .v { font-size: 9vmin; }
+		.chart { flex: 1; min-height: 0; position: relative; }
+		.chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+		.hist-foot { display: flex; justify-content: space-between; gap: 2vmin; font-size: 6.5vmin; color: var(--muted); white-space: nowrap; }
+
+		/* ---------- Seite 4 + 5: Details / Gerät */
+		.kv { flex: 1; display: grid; grid-template-columns: 1fr 1fr; align-content: space-evenly; column-gap: 4vmin; row-gap: 1.5vmin; margin-top: 3vmin; }
+		.kv > div { min-width: 0; }
+		.kv .k { font-size: 6.5vmin; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+		.kv .v { font-size: 8.5vmin; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.15; }
+		.kv .wide { grid-column: span 2; }
+		.kv .small .v { font-size: 6.5vmin; }
+		/* GPU-Seite: 4 Zeilen statt 5, daher größere Schrift */
+		#kvGpu { margin-top: 4vmin; }
+		#kvGpu .k { font-size: 7vmin; }
+		#kvGpu .v { font-size: 10.5vmin; }
+
+		/* ---------- Seite 7: Stecker */
+		.hl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 2vmin; margin-top: 3vmin; white-space: nowrap; }
+		.hl-head .state { font-size: var(--hls-size, 9vmin); color: var(--ok); overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+		.hl-head .state.warn { color: var(--warn); }
+		.hl-head .state.crit { color: var(--crit); }
+		.hl-head .sub { font-size: 7vmin; color: var(--muted); flex: none; }
+		.hl-pins { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5vmin; text-align: center; white-space: nowrap; }
+		.hl-pins > div { min-width: 0; overflow: hidden; }
+		.hl-pins .n { font-size: 7vmin; line-height: 1.1; color: var(--muted); }
+		.hl-pins .v { font-size: var(--hlv-size, 9.5vmin); line-height: 1.1; }
+		.hl-pins .v .u { font-size: 0.6em; color: var(--muted); margin-left: 0.2vmin; }
+		.hl-pins .warn .v { color: var(--warn); }
+		.hl-pins .crit .v { color: var(--crit); }
+		.chart .hl-wait { position: absolute; inset: 0; }
+		.hl-wait { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 2vmin; }
+		.hl-wait .t { font-size: 11vmin; }
+		.hl-wait .s { font-size: 8vmin; color: var(--muted); }
+		#pageHealth .hist-foot { font-size: 8vmin; }
+
+		/* ---------- Offline */
+		.message { display: none; flex: 1; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 2vmin; }
+		.message .t { font-size: 11vmin; }
+		.message .s { font-size: 7vmin; color: var(--muted); }
+		body.offline .message { display: flex; }
+
+		/* ---------- Popup + Hinweis */
+		.popup {
+			display: none;
+			position: absolute;
+			inset: 0;
+			z-index: 10;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 2vmin;
+			padding: 6vmin;
+			text-align: center;
+			background: color-mix(in srgb, var(--crit) 22%, var(--bg));
+			border: 1.6vmin solid var(--crit);
+			animation: pulse 1s infinite;
+		}
+		body.popup-open .popup { display: flex; }
+		.popup .ptitle { font-size: 13vmin; color: var(--crit); line-height: 1.1; white-space: pre-line; }
+		.popup .pvalue { font-size: 11vmin; }
+		.popup .phint { font-size: 6.5vmin; color: var(--muted); }
+		@keyframes pulse { 50% { border-color: color-mix(in srgb, var(--crit) 35%, var(--bg)); } }
+		/* Windows-Einstellung „Animationseffekte“ aus: nicht blinken, pulsieren oder drehen (Farben und Rahmen bleiben) */
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { animation: none !important; transition: none !important; }
+		}
+		.toast {
+			display: none;
+			position: absolute;
+			left: 8vmin; right: 8vmin; bottom: 8vmin;
+			z-index: 11;
+			padding: 3vmin;
+			border-radius: 2vmin;
+			text-align: center;
+			font-size: 7vmin;
+			background: color-mix(in srgb, var(--text) 18%, var(--bg));
+		}
+		body.toast-open .toast { display: block; }
+		</style>
+	</head>
+	<body class="offline">
+		<div id="root">
+			<div class="head">
+				<div class="pager" id="pager"></div>
+				<span id="headLabel"></span>
+				<span class="dot"></span>
+			</div>
+
+			<!-- 1: Übersicht -->
+			<section class="page" id="pageOverview">
+				<div class="power"><span class="num b" id="power">--</span><span class="unit">W</span></div>
+				<div class="cap" id="cap"><div class="fill" id="capFill"></div></div>
+				<div class="stats">
+					<div class="stat" id="stat1"><span class="lbl"></span><svg class="ico" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="2.4"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(25 12 12)"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(145 12 12)"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(265 12 12)"/></g></svg><span class="v b">--</span><span class="u"></span></div>
+					<div class="stat" id="stat2"><span class="lbl"></span><svg class="ico" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="2.4"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(25 12 12)"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(145 12 12)"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(265 12 12)"/></g></svg><span class="v b">--</span><span class="u"></span></div>
+					<div class="stat" id="stat3"><span class="lbl"></span><svg class="ico" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="12" r="2.4"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(25 12 12)"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(145 12 12)"/><ellipse cx="12" cy="6" rx="3.2" ry="5.2" transform="rotate(265 12 12)"/></g></svg><span class="v b">--</span><span class="u"></span></div>
+				</div>
+				<div class="pins" id="pins"></div>
+			</section>
+
+			<!-- 2: Pins -->
+			<section class="page" id="pagePins">
+				<div class="ptable" id="ptable"></div>
+			</section>
+
+			<!-- 3: Verlauf -->
+			<section class="page" id="pageHistory">
+				<div class="hist-head">
+					<span><span class="muted" id="lblMax">Max</span> <span class="v b" id="histMax">--</span> W</span>
+					<span><span class="muted">Ø</span> <span class="v b" id="histAvg">--</span> W</span>
+				</div>
+				<div class="chart" id="chart"></div>
+				<div class="hist-foot"><span id="histSpan"></span><span id="histNow"></span></div>
+			</section>
+
+			<!-- 4: Details -->
+			<section class="page" id="pageDetails">
+				<div class="kv" id="kvDetails"></div>
+			</section>
+
+			<!-- 5: Gerät -->
+			<section class="page" id="pageDevice">
+				<div class="kv" id="kvDevice"></div>
+			</section>
+
+			<!-- 6: GPU -->
+			<section class="page" id="pageGpu">
+				<div class="kv" id="kvGpu"></div>
+			</section>
+
+			<!-- 7: Stecker -->
+			<section class="page" id="pageHealth">
+				<div class="hl-head"><span class="state b" id="hlState">--</span><span class="sub" id="hlSub"></span></div>
+				<div class="chart" id="hlChart"></div>
+				<div class="hl-pins" id="hlPins"></div>
+				<div class="hist-foot" id="hlFoot"><span id="hlFootL"></span><span id="hlFootR"></span></div>
+			</section>
+
+			<div class="message">
+				<div class="t b" id="msgTitle"></div>
+				<div class="s" id="msgSub"></div>
+			</div>
+			<div class="popup" id="popup">
+				<div class="ptitle b" id="popTitle"></div>
+				<div class="pvalue b" id="popValue"></div>
+				<div class="phint" id="popHint">Press dial to confirm</div>
+			</div>
+			<div class="toast" id="toast"></div>
+		</div>
+
+		<script>
+		// ============================================================ Einstellungen
+		const DEFAULTS = {
+			cyclePageSec: "0",
+			historyMinutes: "5",
+			overviewStat1: "gpuTemp",
+			overviewStat2: "wvTemp",
+			overviewStat3: "wvFan",
+			showPage1: true, showPage2: false, showPage3: false, showPage4: false, showPage5: false, showPage6: false, showPage7: false,
+			useDeviceLimits: true,
+			ownPinLimit: "10.5",
+			ownTempLimit: "80",
+			ownImbalanceLimit: "40",
+			voltDropMv: "80",
+			warnFromPct: "85",
+			imbalancePopup: true,
+			showPinValues: true,
+			okColor: "#22C55E",
+			warnColor: "#FF6A00",
+			critColor: "#FF2020",
+			accentColor: "#FF7A1A",
+			textColor: "#FFFFFF",
+			labelColor: "#B1B2B3",
+			chartColor: "#FF7A1A",
+			trackColor: "#232527",
+			backgroundColor: "#0B0D10"
+		};
+		// Fest, weil die Berechtigung im Manifest ohnehin nur localhost:8787 erlaubt
+		const BRIDGE_URL = "http://localhost:8787";
+		const POLL_MS = 1000;
+		const HISTORY_POLL_MS = 2000;
+		const TIMEOUT_MS = 2500;
+		const PAGES = ["pageOverview", "pagePins", "pageHistory", "pageDetails", "pageDevice", "pageGpu", "pageHealth"];
+		const HEALTH_POLL_MS = 60000;      // im Hintergrund (für das Popup)
+		const HEALTH_PAGE_POLL_MS = 10000; // während die Stecker-Seite sichtbar ist
+		// Steckerzustand: Abweichung gegenüber der Referenz, ab der orange / rot angezeigt wird
+		const HEALTH_DEV_PP = [5, 10];     // Stromanteil eines Pins in Prozentpunkten
+		const HEALTH_MOHM = [3, 6];        // Widerstand eines Pins (Spannungsabfall je Ampere) in mΩ
+		// Fehler-Bits der WireView; angezeigt werden Klartext-Namen über T()
+		const FAULTS = ["OTP Chip", "OTP", "OCP", "Wire OCP", "OPP", "Imbalance"];
+		const faultNames = (mask) => FAULTS.filter((_, bit) => mask & (1 << bit)).map((f) => T(f));
+
+		// iCUE legt jede Eigenschaft als globale Variable an. Abfrage wie im offiziellen Helfer getIcueProperty(),
+		// ohne eval und nur für bekannte Namen
+		function getIcueProperty(name) {
+			if (!Object.prototype.hasOwnProperty.call(DEFAULTS, name)) return undefined;
+			if (Object.prototype.hasOwnProperty.call(window, name)) {
+				const value = window[name];
+				if (value !== undefined && value !== null && value !== "") return value;
+			}
+			try {
+				const value = Function('return typeof ' + name + ' !== "undefined" ? ' + name + " : undefined")();
+				if (value !== undefined && value !== null && value !== "") return value;
+			} catch (e) { }
+			return undefined;
+		}
+		function prop(name) {
+			const v = getIcueProperty(name);
+			return v === undefined ? DEFAULTS[name] : v;
+		}
+		const on = (name) => { const v = prop(name); return v !== false && v !== "false"; };
+		const num = (name) => parseFloat(prop(name));
+
+		// ============================================================ Texte
+		const strings = {
+			"Bridge not running": "Bridge not running",
+			"Start PinWatchBridge.exe": "Start PinWatchBridge.exe",
+			"WireView not connected": "WireView not connected",
+			"Imbalance": "Imbalance",
+			"OTP Chip": "WireView too hot",
+			"OTP": "Temperature too high",
+			"OCP": "Current too high",
+			"Wire OCP": "Pin current too high",
+			"OPP": "Power too high",
+			"Current Pin / Total": "Current Pin / Total",
+			"Power / Temp": "Power / Temp",
+			"total": "total",
+			"Voltage drop": "Voltage drop",
+			"Stored fault": "New in fault log",
+			"Press dial to confirm": "Press dial to confirm",
+			"Peaks reset": "Peak values reset",
+			"Temp In": "Temp In",
+			"Temp Out": "Temp Out",
+			"Ext. Sensor": "Ext. Sensor",
+			"Total Current": "Total Current",
+			"Fan": "Fan",
+			"Max. Power": "Max. Power",
+			"Max. Pin Current": "Max. Pin Current",
+			"Max. Temperature": "Max. Temperature",
+			"PSU Limit": "PSU Limit",
+			"Fault Log": "Fault Log",
+			"none": "none",
+			"Fan Curve": "Fan Curve",
+			"Active Limits": "Active Limits",
+			"Own": "Own",
+			"last": "last",
+			"min": "min",
+			"now": "now",
+			"No NVIDIA GPU": "No NVIDIA GPU",
+			"Load": "Load",
+			"Temperature": "Temperature",
+			"Driver Power": "Driver Power",
+			"Connector Power": "Connector Power",
+			"Difference (Slot)": "Difference (Slot)",
+			"Power Limit": "Power Limit",
+			"Connector OK": "Connector OK",
+			"Pin %s unusual": "Pin %s unusual",
+			"Pins %s unusual": "Pins %s unusual",
+			"%s pins unusual": "%s pins unusual",
+			"Check pin %s": "Check pin %s",
+			"Check pins %s": "Check pins %s",
+			"Check %s pins": "Check %s pins",
+			"Collecting data": "Collecting data",
+			"min under load today": "min under load today",
+			"Reference": "Reference",
+			"provisional": "provisional",
+			"Comparison from next day": "Comparison from the next day",
+			"Connector": "Connector",
+			"In": "In",
+			"Out": "Out",
+			"Ext1": "Ext1",
+			"Ext2": "Ext2",
+			"Counts from": "Counts from",
+			"GPU Clock": "GPU Clock",
+			"from": "from",
+			"GPU values off": "GPU values off",
+			"Statistics off": "Statistics off",
+			"Switched off in the bridge": "Bridge menu: Settings"
+		};
+		const T = (k) => strings[k] || k;
+		// Übersetzungen vom letzten Start sofort nutzen, damit nicht kurz Englisch erscheint
+		const STRINGS_CACHE = "pinwatch-strings";
+		try { Object.assign(strings, JSON.parse(localStorage.getItem(STRINGS_CACHE)) || {}); } catch (e) { }
+		let stringsLoading = null;
+		function loadStrings() {
+			if (typeof tr !== "function") return Promise.resolve();
+			// Alle Texte gleichzeitig anfragen, jedes tr() ist ein eigener Aufruf an iCUE
+			stringsLoading = stringsLoading || Promise.all(Object.keys(strings).map(async (key) => {
+				try { const v = await tr(key); if (v) strings[key] = v; } catch (e) { }
+			})).then(() => {
+				try { localStorage.setItem(STRINGS_CACHE, JSON.stringify(strings)); } catch (e) { }
+				$("popHint").textContent = T("Press dial to confirm");
+				document.body.classList.remove("loading");
+				if (lastData) render(lastData);
+			});
+			return stringsLoading;
+		}
+
+		// ============================================================ Hilfen
+		const $ = (id) => document.getElementById(id);
+		const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+		const fmt = (v, d = 1) => (v === null || v === undefined || isNaN(v) ? "–" : Number(v).toFixed(d));
+		const rank = { "": 0, warn: 1, crit: 2 };
+
+		function level(value, limit) {
+			if (value >= limit) return "crit";
+			if (value >= limit * num("warnFromPct") / 100) return "warn";
+			return "";
+		}
+		function setLevel(el, lvl) {
+			el.classList.toggle("warn", lvl === "warn");
+			el.classList.toggle("crit", lvl === "crit");
+		}
+
+		// Grenzwerte: aus der WireView selbst oder aus den iCUE-Einstellungen
+		function limits(d) {
+			const dev = d.device && d.device.limits;
+			if (on("useDeviceLimits") && dev) {
+				return { pinA: dev.wireOcpA, tempC: dev.tempC, imbPct: dev.imbalancePct, imbMinA: dev.imbalanceMinLoadA, source: "device" };
+			}
+			return { pinA: num("ownPinLimit"), tempC: num("ownTempLimit"), imbPct: num("ownImbalanceLimit"), imbMinA: 6, source: "icue" };
+		}
+
+		// ============================================================ Seiten
+		let page = 0;
+		let cycleTimer = null;
+
+		// Eingeschaltete Seiten, die erste ist die Startseite. Alles aus: nur die Übersicht.
+		function enabledPages() {
+			const list = PAGES.map((_, n) => n).filter((n) => on("showPage" + (n + 1)));
+			return list.length ? list : [0];
+		}
+
+		// Ein Punkt pro Seite, bei nur einer Seite keine Punkte
+		function updatePager() {
+			const list = enabledPages();
+			$("pager").innerHTML = list.length < 2 ? "" : list.map((n) => '<span class="' + (n === page ? "on" : "") + '"></span>').join("");
+		}
+
+		function nextPage() {
+			const list = enabledPages();
+			showPage(list[(list.indexOf(page) + 1) % list.length]);
+		}
+
+		function showPage(i) {
+			page = (i + PAGES.length) % PAGES.length;
+			PAGES.forEach((id, n) => $(id).classList.toggle("active", n === page));
+			updatePager();
+			if (lastData) render(lastData);
+			if (PAGES[page] === "pageHistory") pollHistory();
+			if (PAGES[page] === "pageHealth") pollHealth();
+		}
+
+		function restartCycle() {
+			clearInterval(cycleTimer);
+			const s = num("cyclePageSec");
+			if (s > 0) cycleTimer = setInterval(() => { if (!popupOpen()) nextPage(); }, s * 1000);
+		}
+
+		// ============================================================ Seite 1: Übersicht
+		const pinEls = [];
+		function buildPins() {
+			const host = $("pins");
+			for (let i = 0; i < 6; i++) {
+				const el = document.createElement("div");
+				el.className = "pin";
+				el.innerHTML = '<div class="amp b">-</div><div class="track"><div class="fill"></div></div>';
+				host.appendChild(el);
+				pinEls.push({ root: el, amp: el.querySelector(".amp"), fill: el.querySelector(".fill") });
+			}
+		}
+
+		function renderOverview(d, lim, lv) {
+			$("power").textContent = Math.round(d.totalW);
+			const capPct = d.psuCapW ? (d.totalW / d.psuCapW) * 100 : 0;
+			$("capFill").style.width = Math.min(100, capPct) + "%";
+			setLevel($("cap"), level(capPct, 100));
+			[1, 2, 3].forEach((n) => renderStat($("stat" + n), String(prop("overviewStat" + n)), d, lv, lim));
+			d.pins.forEach((p, i) => {
+				const el = pinEls[i];
+				el.amp.textContent = p.a >= 10 ? p.a.toFixed(0) : p.a.toFixed(1);
+				el.fill.style.height = Math.min(100, (p.a / lim.pinA) * 100) + "%";
+				setLevel(el.root, lv.pinLvl[i]);
+			});
+			if (PAGES[page] === "pageOverview") fitOverview();
+		}
+
+		// Felder der Übersicht, in iCUE wählbar. GPU-Werte ohne NVIDIA-GPU: stattdessen die Spannung.
+		function statValue(key, d, lv, lim) {
+			const g = d.gpu && d.gpu.available ? d.gpu : null;
+			const r = (v) => (v === null || v === undefined ? null : Math.round(v));
+			switch (key) {
+				case "wvTemp": return { lbl: "WV", v: lv.tempC === null ? "--" : Math.round(lv.tempC), u: "°C", lvl: lv.tempLvl };
+				case "wvTempIn": case "wvTempOut": case "wvTempExt1": case "wvTempExt2": {
+					// Einzelner Fühler, mit Kennzeichnung, damit man weiß, welcher es ist
+					const k = { wvTempIn: ["in", "In"], wvTempOut: ["out", "Out"], wvTempExt1: ["ext1", "Ext1"], wvTempExt2: ["ext2", "Ext2"] }[key];
+					const t = d.temps ? d.temps[k[0]] : null;
+					const has = t !== null && t !== undefined;
+					return { lbl: T(k[1]), v: has ? Math.round(t) : "--", u: "°C", lvl: has ? level(t, lim.tempC) : "" };
+				}
+				case "wvFan": return { v: d.fanDuty ?? "--", u: "%", fan: true, spin: d.fanDuty > 0 };
+				case "totalA": return { v: d.totalA.toFixed(1), u: "A" };
+				case "gpuTemp": if (g && g.tempC !== null) return { lbl: "GPU", v: r(g.tempC), u: "°C" }; break;
+				case "gpuLoad": if (g && g.loadPct !== null) return { lbl: "GPU", v: r(g.loadPct), u: "%" }; break;
+				case "gpuPower": if (g && g.powerW !== null) return { lbl: "GPU", v: r(g.powerW), u: "W" }; break;
+				case "gpuClock": if (g && g.coreMHz !== null) return { lbl: "GPU", v: (g.coreMHz / 1000).toFixed(2), u: "GHz" }; break;
+				case "slotW": if (g && g.powerW !== null) return { lbl: "Slot", v: r(g.powerW - d.totalW), u: "W" }; break;
+			}
+			return { v: d.avgV.toFixed(2), u: "V" };
+		}
+		function renderStat(el, key, d, lv, lim) {
+			const s = statValue(key, d, lv, lim);
+			el.querySelector(".lbl").textContent = s.lbl || "";
+			el.querySelector(".v").textContent = s.v;
+			el.querySelector(".u").textContent = s.u;
+			el.classList.toggle("fan", !!s.fan);
+			el.classList.toggle("spin", !!s.spin);
+			setLevel(el, s.lvl || "");
+		}
+
+		// Schrift verkleinern, bis nichts mehr überläuft (iCUE rendert mit Open Sans)
+		function shrinkToFit(varName, startVmin, els, minPx = 6) {
+			const root = document.documentElement.style;
+			const vmin = Math.min(window.innerWidth, window.innerHeight) / 100;
+			let size = startVmin * vmin;
+			root.setProperty(varName, size + "px");
+			const overflows = () => els.some((el) => el.scrollWidth > el.clientWidth + 0.5);
+			while (overflows() && size > minPx) {
+				size -= 1;
+				root.setProperty(varName, size + "px");
+			}
+			return !overflows();
+		}
+		function fitOverview() {
+			const n = $("power"), box = n.parentElement;
+			n.style.fontSize = "";
+			let size = parseFloat(getComputedStyle(n).fontSize);
+			while (box.scrollWidth > box.clientWidth && size > 8) { size -= 2; n.style.fontSize = size + "px"; }
+			document.body.classList.remove("amps-too-small");
+			shrinkToFit("--stat-size", 12, [...document.querySelectorAll("#pageOverview .stat")]);
+			const fit = shrinkToFit("--amp-size", 9, pinEls.map((p) => p.amp), 8);
+			document.body.classList.toggle("amps-too-small", !fit);
+		}
+
+		// ============================================================ Seite 2: Pins
+		function renderPins(d, lim, lv) {
+			const cls = (l) => (l ? ' class="' + l + '"' : "");
+			let html = '<div class="h"></div><div class="h">V</div><div class="h">Δ mV</div><div class="h">A</div><div class="h">W</div>';
+			d.pins.forEach((p, i) => {
+				const drop = Math.round((lv.avgPinV - p.v) * 1000);
+				html += '<div class="idx">' + (i + 1) + "</div>" +
+					"<div>" + p.v.toFixed(2) + "</div>" +
+					"<div" + cls(lv.dropLvl[i]) + ">" + (drop > 0 ? "−" : drop < 0 ? "+" : "") + Math.abs(drop) + "</div>" +
+					'<div class="b' + (lv.pinLvl[i] ? " " + lv.pinLvl[i] : "") + '">' + p.a.toFixed(1) + "</div>" +
+					"<div>" + Math.round(p.w) + "</div>";
+			});
+			$("ptable").innerHTML = html;
+		}
+
+		// ============================================================ Seite 3: Verlauf
+		let historyTimer = null;
+		async function pollHistory() {
+			clearTimeout(historyTimer);
+			if (PAGES[page] !== "pageHistory") return;
+			try {
+				const s = parseInt(prop("historyMinutes")) * 60;
+				const res = await fetchJson("/history?seconds=" + s + "&points=120");
+				renderHistory(res);
+			} catch (e) { }
+			historyTimer = setTimeout(pollHistory, HISTORY_POLL_MS);
+		}
+
+		function renderHistory(h) {
+			const pts = h.points || [];
+			const mins = Math.round(h.seconds / 60);
+			$("histSpan").textContent = T("last") + " " + mins + " " + T("min");
+			if (!pts.length) { $("chart").innerHTML = ""; return; }
+			const ws = pts.map((p) => p[1]);
+			const max = Math.max(...ws);
+			const avg = ws.reduce((a, b) => a + b, 0) / ws.length;
+			$("histMax").textContent = Math.round(max);
+			$("histAvg").textContent = Math.round(avg);
+			$("histNow").textContent = T("now") + " " + Math.round(ws[ws.length - 1]) + " W";
+
+			const box = $("chart").getBoundingClientRect();
+			const W = Math.max(10, box.width), H = Math.max(10, box.height);
+			const cap = lastData && lastData.psuCapW ? lastData.psuCapW : 0;
+			const top = Math.max(100, max * 1.1, cap && max > cap * 0.6 ? cap * 1.05 : 0);
+			const t0 = h.now - h.seconds * 1000;
+			const x = (t) => ((t - t0) / (h.seconds * 1000)) * W;
+			const y = (w) => H - (w / top) * H;
+			const line = pts.map((p, i) => (i ? "L" : "M") + x(p[0]).toFixed(1) + " " + y(p[1]).toFixed(1)).join(" ");
+			const area = line + " L" + x(pts[pts.length - 1][0]).toFixed(1) + " " + H + " L" + x(pts[0][0]).toFixed(1) + " " + H + " Z";
+			const sw = Math.max(1.5, H / 70);
+			let svg = '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none">';
+			svg += '<line x1="0" y1="' + H + '" x2="' + W + '" y2="' + H + '" stroke="var(--track)" stroke-width="1"/>';
+			if (cap && cap <= top) {
+				svg += '<line x1="0" y1="' + y(cap) + '" x2="' + W + '" y2="' + y(cap) + '" stroke="var(--crit)" stroke-width="1" stroke-dasharray="4 4" opacity="0.7"/>';
+			}
+			svg += '<path d="' + area + '" fill="var(--chart)" opacity="0.18"/>';
+			svg += '<path d="' + line + '" fill="none" stroke="var(--chart)" stroke-width="' + sw + '" stroke-linejoin="round"/>';
+			svg += "</svg>";
+			$("chart").innerHTML = svg;
+		}
+
+		// ============================================================ Seite 4: Details
+		function kv(label, value, extraCls) {
+			return '<div class="' + (extraCls || "") + '"><div class="k">' + esc(label) + '</div><div class="v b">' + value + "</div></div>";
+		}
+
+		function renderDetails(d, lim, lv) {
+			const t = d.temps || {};
+			const pk = d.peaks || {};
+			const tempVal = (v) => (v === null || v === undefined ? "–" : '<span class="' + level(v, lim.tempC) + '">' + fmt(v) + " °C</span>");
+			let html = kv(T("Temp In"), tempVal(t.in)) + kv(T("Temp Out"), tempVal(t.out));
+			if (t.ext1 !== null && t.ext1 !== undefined) html += kv(T("Ext. Sensor") + " 1", tempVal(t.ext1));
+			if (t.ext2 !== null && t.ext2 !== undefined) html += kv(T("Ext. Sensor") + " 2", tempVal(t.ext2));
+			html += kv(T("Total Current"), fmt(d.totalA) + " A") + kv(T("Fan"), d.fanDuty + " %");
+			const pinA = pk.pinA || [];
+			const peakPin = pinA.length ? pinA.indexOf(Math.max(...pinA)) : -1;
+			html += kv(T("Max. Power"), Math.round(pk.w || 0) + " W") +
+				kv(T("Max. Pin Current"), peakPin >= 0 ? '<span class="' + level(pinA[peakPin], lim.pinA) + '">' + fmt(pinA[peakPin]) + " A</span> <span class=\"muted\">(" + (peakPin + 1) + ")</span>" : "–");
+			html += kv(T("Max. Temperature"), tempVal(pk.tempC)) + kv(T("PSU Limit"), d.psuCapW + " W");
+			$("kvDetails").innerHTML = html;
+		}
+
+		// ============================================================ Seite 5: Gerät
+		function renderDevice(d, lim) {
+			const dev = d.device || {};
+			const l = dev.limits;
+			const log = faultNames(d.faultLog);
+			// Fehlerspeicher über die ganze Breite, damit auch mehrere Einträge hineinpassen
+			let html = kv(T("Fault Log"), log.length ? '<span class="crit">' + esc(log.join(", ")) + "</span>" : T("none"), "wide");
+			if (l) {
+				html += kv(T("Current Pin / Total"), fmt(l.wireOcpA) + " A / " + l.ocpA + " A") + kv(T("Power / Temp"), l.oppW + " W / " + fmt(l.tempC, 0) + " °C");
+				html += kv(T("Imbalance"), l.imbalancePct + " % <span class=\"muted\">" + T("from") + " " + l.imbalanceMinLoadA + " A</span>");
+			}
+			if (dev.fan) html += kv(T("Fan Curve"), fmt(dev.fan.tempMinC, 0) + "–" + fmt(dev.fan.tempMaxC, 0) + " °C");
+			// Welche Grenzen gerade gelten (eigene Werte stehen in iCUE)
+			html += kv(T("Active Limits"), lim.source === "device" ? "WireView" : '<span class="warn">' + T("Own") + "</span>");
+			$("kvDevice").innerHTML = html;
+		}
+
+		// ============================================================ Seite 6: GPU (nvidia-smi über die Bridge)
+		function renderGpu(d) {
+			const g = d.gpu;
+			if (!g || !g.available) {
+				const off = g && g.error === "disabled";
+				$("kvGpu").innerHTML = '<div class="hl-wait wide"><div class="t b">' + esc(T(off ? "GPU values off" : "No NVIDIA GPU")) + '</div><div class="s">' +
+					esc(off ? T("Switched off in the bridge") : g && g.error ? g.error : "") + "</div></div>";
+				return;
+			}
+			const n = (v, dec = 0) => (v === null || v === undefined ? "–" : Number(v).toFixed(dec));
+			const gb = (mib) => (mib === null || mib === undefined ? "–" : (mib / 1024).toFixed(1));
+			let html = "";
+			const powerLvl = g.powerW !== null && g.powerLimitW ? level(g.powerW, g.powerLimitW) : "";
+			html += kv(T("Load"), n(g.loadPct) + " %") + kv(T("Temperature"), n(g.tempC) + " °C");
+			// Takt in GHz wie im Übersichtsfeld "GPU-Takt"
+			html += kv(T("GPU Clock"), g.coreMHz === null || g.coreMHz === undefined ? "–" : (g.coreMHz / 1000).toFixed(2) + " GHz") + kv("VRAM / " + gb(g.vramTotalMiB) + " GB", gb(g.vramUsedMiB) + " GB");
+			html += kv(T("Driver Power"), '<span class="' + powerLvl + '">' + n(g.powerW) + " W</span>") +
+				kv(T("Connector Power"), Math.round(d.totalW) + " W");
+			// Treiber misst die ganze Karte, die WireView nur den 12V-2x6-Stecker: der Rest kommt meist aus dem PCIe-Slot
+			const diff = g.powerW !== null ? g.powerW - d.totalW : null;
+			html += kv(T("Difference (Slot)"), diff === null ? "–" : (diff >= 0 ? "" : "−") + Math.abs(Math.round(diff)) + " W") +
+				kv(T("Power Limit"), n(g.powerLimitW) + " W");
+			$("kvGpu").innerHTML = html;
+		}
+
+		// ============================================================ Seite 7: Stecker über die Zeit
+		let lastHealth = null;
+		let healthTimer = null;
+		async function pollHealth() {
+			clearTimeout(healthTimer);
+			try {
+				lastHealth = await fetchJson("/health?days=30");
+				if (PAGES[page] === "pageHealth") renderHealth(lastHealth);
+			} catch (e) { }
+			healthTimer = setTimeout(pollHealth, PAGES[page] === "pageHealth" ? HEALTH_PAGE_POLL_MS : HEALTH_POLL_MS);
+		}
+
+		// Vergleicht die letzten Tage mit dem Referenztag, pro Pin Stufe und Werte
+		function assessHealth(h) {
+			if (!h || !h.reference || !h.reference.dev) return null;
+			const ref = h.reference, cur = h.recent && h.recent.dev ? h.recent : null;
+			const lvl = (v, t) => (v >= t[1] ? "crit" : v >= t[0] ? "warn" : "");
+			const pins = ref.dev.map((_, i) => {
+				if (!cur) return { dev: ref.dev[i], dDev: null, dMohm: null, lvl: "" };
+				const dDev = cur.dev[i] - ref.dev[i];
+				const dMohm = cur.mohm[i] - ref.mohm[i];
+				const l = [lvl(Math.abs(dDev), HEALTH_DEV_PP), lvl(dMohm, HEALTH_MOHM)].sort((a, b) => rank[b] - rank[a])[0];
+				return { dev: cur.dev[i], dDev, dMohm, lvl: l };
+			});
+			let worst = "";
+			pins.forEach((p) => { if (rank[p.lvl] > rank[worst]) worst = p.lvl; });
+			const order = pins.map((p, i) => i).sort((a, b) =>
+				rank[pins[b].lvl] - rank[pins[a].lvl] || Math.abs(pins[b].dDev || 0) - Math.abs(pins[a].dDev || 0));
+			return { ref, cur, pins, worst, worstPin: order[0] };
+		}
+
+		// Kopfzeile und Popup nennen die betroffenen Pins: "Pin 4 auffällig" (orange), "Pin 4 prüfen" (rot)
+		function healthTitle(a) {
+			if (!a.worst) return T("Connector OK");
+			const bad = a.pins.map((p, i) => (p.lvl === a.worst ? i + 1 : 0)).filter(Boolean);
+			const warn = a.worst === "warn";
+			const key = bad.length === 1 ? (warn ? "Pin %s unusual" : "Check pin %s")
+				: bad.length === 2 ? (warn ? "Pins %s unusual" : "Check pins %s")
+				: (warn ? "%s pins unusual" : "Check %s pins");
+			return T(key).replace("%s", bad.length <= 2 ? bad.join(" + ") : bad.length);
+		}
+
+		const fmtPct = (v) => (v > 0 ? "+" : v < 0 ? "−" : "±") + Math.abs(Math.round(v)) + " %";
+
+		function renderHealth(h) {
+			const a = assessHealth(h);
+			const today = h.today && h.today.minutes ? h.today.minutes : 0;
+			if (h.enabled === false) {
+				$("hlState").textContent = T("Connector");
+				$("hlState").className = "state b";
+				$("hlSub").textContent = "";
+				$("hlChart").innerHTML = '<div class="hl-wait"><div class="t b">' + esc(T("Statistics off")) + '</div><div class="s">' +
+					esc(T("Switched off in the bridge")) + "</div></div>";
+				$("hlPins").innerHTML = "";
+				$("hlFootL").textContent = "";
+				$("hlFootR").textContent = "";
+				$("hlFoot").style.display = $("hlFootL").textContent ? "" : "none";
+				return;
+			}
+			if (!a) {
+				$("hlState").textContent = T("Connector");
+				$("hlState").className = "state b";
+				$("hlSub").textContent = "";
+				$("hlChart").innerHTML = '<div class="hl-wait"><div class="t b">' + esc(T("Collecting data")) + '…</div><div class="s">' +
+					Math.floor(today) + " / " + h.minMinutes + " " + esc(T("min under load today")) + "</div></div>";
+				$("hlPins").innerHTML = "";
+				$("hlFootL").textContent = T("Counts from") + " " + h.minLoadA + " A";
+				$("hlFootR").textContent = "";
+				$("hlFoot").style.display = $("hlFootL").textContent ? "" : "none";
+				return;
+			}
+			$("hlState").textContent = a.cur ? healthTitle(a) : T("Reference");
+			$("hlState").className = "state b " + a.worst;
+			$("hlSub").textContent = a.cur ? "" : (h.referenceFinal ? "" : T("provisional") + " · ") + Math.round(a.ref.minutes) + " min";
+
+			// Pro Pin nur eine Zahl: Abweichung vom Durchschnitt der 6 Pins. Die Farbe zeigt die Bewertung gegenüber der Referenz.
+			const sign = (v) => (v > 0 ? "+" : v < 0 ? "−" : "±") + Math.abs(Math.round(v));
+			$("hlPins").innerHTML = a.pins.map((p, i) =>
+				'<div class="' + p.lvl + '"><div class="n">' + (i + 1) + '</div><div class="v b">' + sign(p.dev) + '<span class="u">%</span></div></div>').join("");
+
+			// Große Schrift, aber nur so groß, dass Kopfzeile und alle Pin-Werte ganz hineinpassen
+			shrinkToFit("--hls-size", 9, [$("hlState")], 8);
+			shrinkToFit("--hlv-size", 11, [...document.querySelectorAll("#hlPins .v")], 8);
+			// Fußzeile passend zu den Balken: Ungleichheit Referenz → letzte Tage
+			// Fußzeile nur, solange es noch nichts zu vergleichen gibt; Details stehen im Stecker-Bericht der Bridge
+			$("hlFootL").textContent = a.cur ? "" : T("Comparison from next day");
+			$("hlFootR").textContent = "";
+			$("hlFoot").style.display = $("hlFootL").textContent ? "" : "none";
+			renderHealthChart(h, a);
+		}
+
+		// Pro Pin eine Säule: Abweichung vom Durchschnitt jetzt (farbig), grauer Strich = Referenz
+		function renderHealthChart(h, a) {
+			const box = $("hlChart").getBoundingClientRect();
+			const W = Math.max(10, box.width), H = Math.max(10, box.height);
+			if (H < 12) { $("hlChart").innerHTML = ""; return; }
+			const now = a.pins.map((p) => p.dev), ref = a.ref.dev;
+			const span = Math.max(10, ...now.map(Math.abs), ...ref.map(Math.abs)) * 1.1;
+			const mid = H / 2, y = (v) => mid - (v / span) * (H / 2);
+			const slot = W / 6, bw = slot * 0.42;
+			let svg = '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none">';
+			svg += '<line x1="0" y1="' + mid + '" x2="' + W + '" y2="' + mid + '" stroke="var(--muted)" stroke-width="1"/>';
+			a.pins.forEach((p, i) => {
+				const cx = slot * i + slot / 2;
+				const col = p.lvl === "crit" ? "var(--crit)" : p.lvl === "warn" ? "var(--warn)" : "var(--ok)";
+				const y1 = Math.min(mid, y(p.dev)), hh = Math.max(1.5, Math.abs(y(p.dev) - mid));
+				svg += '<rect x="' + (cx - bw / 2).toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + hh.toFixed(1) + '" fill="' + col + '"/>';
+				svg += '<line x1="' + (cx - bw * 0.85).toFixed(1) + '" y1="' + y(ref[i]).toFixed(1) + '" x2="' + (cx + bw * 0.85).toFixed(1) + '" y2="' + y(ref[i]).toFixed(1) + '" stroke="var(--text)" stroke-width="2.5" opacity="0.75"/>';
+			});
+			svg += "</svg>";
+			$("hlChart").innerHTML = svg;
+		}
+
+		// ============================================================ Auswertung + Popups
+		let lastData = null;
+
+		function render(d) {
+			lastData = d;
+			if (!d.connected) {
+				setOffline(T("WireView not connected"), d.error);
+				updatePopup(null);
+				return;
+			}
+			document.body.classList.remove("offline");
+			const lim = limits(d);
+
+			// Kennzahlen und Stufen einmal berechnen, alle Seiten nutzen sie
+			const amps = d.pins.map((p) => p.a);
+			const avgA = amps.reduce((s, v) => s + v, 0) / amps.length;
+			const avgPinV = d.pins.reduce((s, p) => s + p.v, 0) / d.pins.length;
+			const temps = Object.values(d.temps || {}).filter((t) => t !== null && t !== undefined);
+			const tempC = temps.length ? Math.max(...temps) : null;
+			const loaded = d.totalA >= lim.imbMinA;
+			const imb = loaded && avgA > 0 ? ((Math.max(...amps) - avgA) / avgA) * 100 : 0;
+			const drops = d.pins.map((p) => (avgPinV - p.v) * 1000);
+			const lv = {
+				avgPinV, tempC,
+				tempLvl: tempC === null ? "" : level(tempC, lim.tempC),
+				pinLvl: amps.map((a) => level(a, lim.pinA)),
+				dropLvl: drops.map((mv) => (loaded ? level(mv, num("voltDropMv")) : "")),
+				imbLvl: loaded ? level(imb, lim.imbPct) : ""
+			};
+
+			let worst = "";
+			const raise = (l) => { if (rank[l] > rank[worst]) worst = l; };
+			raise(lv.tempLvl);
+			lv.pinLvl.forEach(raise);
+			lv.dropLvl.forEach((l) => raise(l === "crit" ? "warn" : l));
+			raise(lv.imbLvl === "crit" ? "warn" : lv.imbLvl);
+
+			const active = faultNames(d.faultStatus);
+			$("headLabel").textContent = active.join(" · ");
+			if (active.length) worst = "crit";
+			setState(worst);
+
+			const id = PAGES[page];
+			if (id === "pageOverview") renderOverview(d, lim, lv);
+			else if (id === "pagePins") renderPins(d, lim, lv);
+			else if (id === "pageDetails") renderDetails(d, lim, lv);
+			else if (id === "pageDevice") renderDevice(d, lim);
+			else if (id === "pageGpu") renderGpu(d);
+			else if (id === "pageHealth" && lastHealth) renderHealth(lastHealth);
+
+			// Popup-Kandidaten nach Priorität
+			let alert = null;
+			const top = amps.indexOf(Math.max(...amps));
+			if (active.length) {
+				// Zum ersten aktiven Fehler den passenden Messwert zeigen
+				const bit = FAULTS.findIndex((_, b) => d.faultStatus & (1 << b));
+				const t = d.temps || {};
+				const maxT = Math.max(...[t.in, t.out, t.ext1, t.ext2].filter((v) => v !== null && v !== undefined));
+				const value = bit === 2 ? fmt(d.totalA) + " A " + T("total")
+					: bit === 4 ? Math.round(d.totalW) + " W"
+					: bit === 1 && isFinite(maxT) ? fmt(maxT) + " °C"
+					: bit === 5 ? T("Imbalance") + " " + Math.round(imb) + " %"
+					: bit === 0 ? ""
+					: "Pin " + (top + 1) + ": " + amps[top].toFixed(1) + " A";
+				alert = { key: "fault", title: active.join("\n"), value };
+			} else if (on("imbalancePopup") && lv.imbLvl === "crit") {
+				alert = { key: "imbalance", title: T("Imbalance") + " " + Math.round(imb) + "%", value: "Pin " + (top + 1) + ": " + amps[top].toFixed(1) + " A" };
+			} else if (on("imbalancePopup") && lv.dropLvl.includes("crit")) {
+				const i = drops.indexOf(Math.max(...drops));
+				alert = { key: "drop", title: T("Voltage drop"), value: "Pin " + (i + 1) + ": −" + Math.round(drops[i]) + " mV" };
+			} else if (on("imbalancePopup") && d.faultLog && String(d.faultLog) !== storeGet("ackFaultLog")) {
+				const log = faultNames(d.faultLog);
+				alert = { key: "log", title: T("Stored fault"), value: log.join(", "), instant: true, onAck: () => storeSet("ackFaultLog", String(d.faultLog)) };
+			} else if (on("imbalancePopup")) {
+				// Stecker hat sich gegenüber der Referenz deutlich verschlechtert: einmal pro neuem Auswertungstag melden
+				const a = assessHealth(lastHealth);
+				if (a && a.cur && a.worst === "crit" && storeGet("ackHealth") !== a.cur.to) {
+					const p = a.pins[a.worstPin];
+					alert = {
+						key: "health", title: healthTitle(a), instant: true,
+						// Referenz → jetzt, z. B. "−4 → −16 %"; bei mehreren Pins mit "Pin 4: " davor
+						value: (a.pins.filter((q) => q.lvl === "crit").length > 1 ? "Pin " + (a.worstPin + 1) + ": " : "") +
+							fmtPct(a.ref.dev[a.worstPin]).replace(" %", "") + " → " + fmtPct(p.dev),
+						onAck: () => storeSet("ackHealth", a.cur.to)
+					};
+				}
+			}
+			updatePopup(alert);
+		}
+
+		function setState(worst) {
+			const b = document.body.classList;
+			// Eigene Klassennamen für den Gesamtzustand: "warn" färbt sonst die ganze Schrift orange
+			b.toggle("state-warn", worst === "warn");
+			b.toggle("state-alert", worst === "crit");
+		}
+
+		function setOffline(title, sub) {
+			const b = document.body.classList;
+			b.add("offline");
+			b.remove("state-warn", "state-alert");
+			$("headLabel").textContent = "";
+			$("msgTitle").textContent = title;
+			$("msgSub").textContent = sub || "";
+		}
+
+		// Popup: Bedingung muss kurz anliegen (keine Fehlalarme bei Lastspitzen),
+		// nach Bestätigung erst wieder, wenn eine Weile alles in Ordnung war.
+		const POPUP_DELAY_MS = 2000;
+		const POPUP_REARM_MS = 5000;
+		const popup = { key: null, since: 0, clearSince: 0, acked: new Set(), current: null };
+		const popupOpen = () => document.body.classList.contains("popup-open");
+
+		function updatePopup(alert) {
+			const now = Date.now();
+			if (alert) {
+				popup.clearSince = 0;
+				if (popup.key !== alert.key) { popup.key = alert.key; popup.since = now; }
+				const due = alert.instant || now - popup.since >= POPUP_DELAY_MS;
+				if (!popup.acked.has(alert.key) && due) {
+					popup.current = alert;
+					$("popTitle").textContent = alert.title;
+					$("popValue").textContent = alert.value;
+					document.body.classList.add("popup-open");
+					return;
+				}
+			} else {
+				popup.key = null;
+				popup.since = 0;
+				if (!popup.clearSince) popup.clearSince = now;
+				if (now - popup.clearSince >= POPUP_REARM_MS) popup.acked.clear();
+			}
+			document.body.classList.remove("popup-open");
+		}
+
+		function acknowledgePopup() {
+			if (!popupOpen() || !popup.current) return false;
+			popup.acked.add(popup.current.key);
+			if (popup.current.onAck) popup.current.onAck();
+			document.body.classList.remove("popup-open");
+			return true;
+		}
+
+		function toast(text) {
+			$("toast").textContent = text;
+			document.body.classList.add("toast-open");
+			clearTimeout(toast.t);
+			toast.t = setTimeout(() => document.body.classList.remove("toast-open"), 2000);
+		}
+
+		function storeGet(k) { try { return localStorage.getItem("pinwatch." + k); } catch (e) { return null; } }
+		function storeSet(k, v) { try { localStorage.setItem("pinwatch." + k, v); } catch (e) { } }
+
+		// ============================================================ Drehrad
+		// Drücken: Popup bestätigen, sonst nächste Seite.
+		// Halten: Spitzenwerte zurücksetzen. (Drehen nutzt iCUE selbst zum Wechseln der Widgets.)
+		async function onDial(actionType) {
+			if (actionType === "long-press") {
+				try { await fetchJson("/reset-peaks"); toast(T("Peaks reset")); } catch (e) { }
+				return;
+			}
+			if (actionType !== "press") return;
+			if (acknowledgePopup()) return;
+			nextPage();
+			restartCycle();
+		}
+
+		let dialConnected = false;
+		function onDeviceactionproviderInitialized() {
+			const plugin = window.plugins && window.plugins.Deviceactionprovider;
+			if (!plugin || dialConnected) return;
+			try {
+				if (typeof device !== "undefined") plugin.initDevice(device.deviceId);
+				plugin.dialTriggered.connect((actionType) => onDial(actionType));
+				dialConnected = true;
+			} catch (e) { }
+		}
+		pluginDeviceactionproviderEvents = { onInitialized: onDeviceactionproviderInitialized };
+		if (typeof pluginDeviceactionprovider_initialized !== "undefined" && pluginDeviceactionprovider_initialized) {
+			onDeviceactionproviderInitialized();
+		}
+
+		// Browser-Vorschau: Klick = Drücken, Rechtsklick = Halten
+		document.addEventListener("click", () => onDial("press"));
+		document.addEventListener("contextmenu", (e) => { e.preventDefault(); onDial("long-press"); });
+
+		// ============================================================ Abfrage
+		async function fetchJson(path) {
+			const url = BRIDGE_URL + path;
+			const ctrl = new AbortController();
+			const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+			try {
+				const res = await fetch(url, { signal: ctrl.signal, cache: "no-store" });
+				if (!res.ok) throw new Error("HTTP " + res.status);
+				return await res.json();
+			} finally {
+				clearTimeout(t);
+			}
+		}
+
+		// Grenzwerte dieses Widgets an die Bridge, damit ihre Windows-Benachrichtigungen dieselben Schwellen nutzen
+		function alertQuery() {
+			if (!lastData || !lastData.connected) return "";
+			const lim = limits(lastData);
+			return "?imb=" + lim.imbPct + "&minA=" + lim.imbMinA + "&drop=" + num("voltDropMv");
+		}
+
+		let pollTimer = null;
+		async function poll() {
+			try {
+				render(await fetchJson("/readings" + alertQuery()));
+			} catch (e) {
+				lastData = null;
+				setOffline(T("Bridge not running"), T("Start PinWatchBridge.exe"));
+				updatePopup(null);
+			} finally {
+				pollTimer = setTimeout(poll, POLL_MS);
+			}
+		}
+
+		function applyStyles() {
+			const root = document.documentElement.style;
+			root.setProperty("--accent", prop("accentColor"));
+			root.setProperty("--ok", prop("okColor"));
+			root.setProperty("--warn", prop("warnColor"));
+			root.setProperty("--crit", prop("critColor"));
+			root.setProperty("--text", prop("textColor"));
+			root.setProperty("--bg", prop("backgroundColor"));
+			root.setProperty("--muted", prop("labelColor"));
+			root.setProperty("--chart", prop("chartColor"));
+			root.setProperty("--track", prop("trackColor"));
+			document.body.classList.toggle("no-pin-values", !on("showPinValues"));
+			restartCycle();
+
+			// Seitenauswahl in iCUE geändert: sofort auf die erste eingeschaltete Seite springen
+			const pages = enabledPages().join();
+			if (pages !== lastPages) {
+				lastPages = pages;
+				showPage(enabledPages()[0]);
+			} else {
+				updatePager();
+				if (lastData) render(lastData);
+			}
+		}
+
+		let lastPages = null;
+		let started = false;
+		function start() {
+			applyStyles();
+			if (started) return;
+			started = true;
+			poll();
+			pollHealth();
+		}
+
+		buildPins();
+		try {
+			if (typeof tr === "function" && !localStorage.getItem(STRINGS_CACHE)) {
+				document.body.classList.add("loading");
+				setTimeout(() => document.body.classList.remove("loading"), 2000);
+			}
+		} catch (e) { }
+		// Falls das Plugin-Event schon vorbei ist oder nie kommt: nach kurzer Zeit selbst versuchen
+		setTimeout(() => { if (!dialConnected) onDeviceactionproviderInitialized(); }, 3000);
+
+		// ============================================================ iCUE-Anbindung
+		icueEvents = {
+			onICUEInitialized: () => { loadStrings(); start(); },
+			onDataUpdated: applyStyles
+		};
+
+		if (typeof iCUE_initialized !== "undefined" && iCUE_initialized) {
+			loadStrings();
+			start();
+		} else if (typeof iCUE === "undefined") {
+			// Außerhalb von iCUE (Browser-Vorschau): mit Standardwerten starten
+			start();
+		}
+		</script>
+	</body>
+</html>
